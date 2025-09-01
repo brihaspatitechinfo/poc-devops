@@ -1,0 +1,106 @@
+#version: "3.9"
+
+services:
+  # API Gateway (public entrypoint)
+  api-gateway:
+    image: 281282485006.dkr.ecr.us-east-1.amazonaws.com/api-gateway-dev:latest
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - auth-service
+      - user-service
+      - coaching-service
+      - event-service
+      - engagement-service
+      - notification-service
+      - utility-service
+    networks:
+      - weace-network
+    restart: unless-stopped
+
+  # Auth Service
+  auth-service:
+    image: 281282485006.dkr.ecr.us-east-1.amazonaws.com/auth-service-dev:latest
+    working_dir: /app
+    ports:
+      - "3001:3001"
+    networks:
+      - weace-network
+    restart: unless-stopped
+
+  # User Service
+  user-service:
+    image: 281282485006.dkr.ecr.us-east-1.amazonaws.com/user-service-dev:latest
+    working_dir: /app
+    ports:
+      - "3002:3002"
+    networks:
+      - weace-network
+    restart: unless-stopped
+
+  # Coaching Service
+  coaching-service:
+    image: 281282485006.dkr.ecr.us-east-1.amazonaws.com/coaching-service-dev:latest
+    working_dir: /app
+    ports:
+      - "3003:3003"
+    networks:
+      - weace-network
+    restart: unless-stopped
+
+  # Event Service
+  event-service:
+    image: 281282485006.dkr.ecr.us-east-1.amazonaws.com/event-service-dev:latest
+    working_dir: /app
+    ports:
+      - "3004:3004"
+    networks:
+      - weace-network
+    restart: unless-stopped
+
+  # Engagement Service
+  engagement-service:
+    image: 281282485006.dkr.ecr.us-east-1.amazonaws.com/engagement-service-dev:latest
+    working_dir: /app
+    ports:
+      - "3005:3005"
+    networks:
+      - weace-network
+    restart: unless-stopped
+
+  # Notification Service
+  notification-service:
+    image: 281282485006.dkr.ecr.us-east-1.amazonaws.com/notification-service-dev:latest
+    working_dir: /app
+    ports:
+      - "3006:3006"
+    networks:
+      - weace-network
+    restart: unless-stopped
+
+  # Utility Service
+  utility-service:
+    image: 281282485006.dkr.ecr.us-east-1.amazonaws.com/utility-service-dev:latest
+    working_dir: /app
+    ports:
+      - "3007:3007"
+    networks:
+      - weace-network
+    restart: unless-stopped
+
+
+
+     # Training Service
+  training-service:
+    image: 281282485006.dkr.ecr.us-east-1.amazonaws.com/training-service-dev:latest
+    working_dir: /app
+    ports:
+      - "3008:3008"
+    networks:
+      - weace-network
+    restart: unless-stopped
+
+networks:
+  weace-network:
+    driver: bridge

@@ -1,0 +1,75 @@
+# Development overrides - COPY THIS FILE to docker-compose.override.yml
+# This file provides development setup with hot reloading and volume mounts
+
+services:
+  # API Gateway
+  api-gateway:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./services/api-gateway:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  # Auth Service
+  auth-service:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./services/auth-service:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  # User Profile Service
+  user-service:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./services/user-service:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  # Coaching Service
+  coaching-service:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./services/coaching-service:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  # Training Service
+  training-service:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./services/training-service:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  # Event Service
+  event-service:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./services/event-service:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  # Engagement Service
+  engagement-service:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./services/engagement-service:/app
+      - /app/node_modules
+    command: npm run start:dev
+
+  # Notification Service
+  notification-service:
+    build:
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./services/notification-service:/app
+      - /app/node_modules
+    command: npm run start:dev 

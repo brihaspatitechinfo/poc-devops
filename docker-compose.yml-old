@@ -1,0 +1,280 @@
+services:
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./services/api-gateway/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - JWT_SECRET=weace-super-secret-jwt-key-2024
+      - AUTH_SERVICE_URL=http://auth-service:3001
+      - USER_SERVICE_URL=http://user-service:3002
+      - COACHING_SERVICE_URL=http://coaching-service:3003
+      - TRAINING_SERVICE_URL=http://training-service:3006
+      - EVENT_SERVICE_URL=http://event-service:3004
+      - ENGAGEMENT_SERVICE_URL=http://engagement-service:3007
+      - NOTIFICATION_SERVICE_URL=http://notification-service:3005
+      - UTILITY_SERVICE_URL=http://utility-service:3008
+    depends_on:
+      - auth-service
+      - user-service
+      - coaching-service
+      - event-service
+      - training-service
+      - engagement-service
+      - notification-service
+      - utility-service
+    networks:
+      - weace-network
+    volumes:
+      - ./services/api-gateway:/app
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ./services/auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./services/auth-service/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - JWT_SECRET=weace-super-secret-jwt-key-2024
+    networks:
+      - weace-network
+    volumes:
+      - ./services/auth-service:/app
+
+  # User Profile Service
+  user-service:
+    build:
+      context: ./services/user-service
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./services/user-service/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=3002
+      - MONGODB_URI=mongodb://mongo:27017/weace_users
+    depends_on:
+      - mongo
+    networks:
+      - weace-network
+    volumes:
+      - ./services/user-service:/app
+
+  # Coaching Service
+  coaching-service:
+    build:
+      context: ./services/coaching-service
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    env_file:
+      - ./services/coaching-service/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=3003
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=coaching_user
+      - DB_PASSWORD=Admin@123
+      - DB_NAME=weace_coaching
+    depends_on:
+      - mysql
+    networks:
+      - weace-network
+    volumes:
+      - ./services/coaching-service:/app
+
+  # Training Service
+  training-service:
+    build:
+      context: ./services/training-service
+      dockerfile: Dockerfile
+    ports:
+      - "3006:3006"
+    env_file:
+      - ./services/training-service/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=3006
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=training_user
+      - DB_PASSWORD=Admin@123
+      - DB_NAME=weace_training
+    depends_on:
+      - mysql
+    networks:
+      - weace-network
+    volumes:
+      - ./services/training-service:/app
+
+  # Event Service
+  event-service:
+    build:
+      context: ./services/event-service
+      dockerfile: Dockerfile
+    ports:
+      - "3004:3004"
+    env_file:
+      - ./services/event-service/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=3004
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=event_user
+      - DB_PASSWORD=Admin@123
+      - DB_NAME=weace_event
+    depends_on:
+      - mysql
+    networks:
+      - weace-network
+    volumes:
+      - ./services/event-service:/app
+
+  # Engagement Service
+  engagement-service:
+    build:
+      context: ./services/engagement-service
+      dockerfile: Dockerfile
+    ports:
+      - "3007:3007"
+    env_file:
+      - ./services/engagement-service/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=3007
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=engagement_user
+      - DB_PASSWORD=Admin@123
+      - DB_NAME=weace_engagement
+    depends_on:
+      - mysql
+    networks:
+      - weace-network
+    volumes:
+      - ./services/engagement-service:/app
+
+  # Notification Service
+  notification-service:
+    build:
+      context: ./services/notification-service
+      dockerfile: Dockerfile
+    ports:
+      - "3005:3005"
+    env_file:
+      - ./services/notification-service/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=3005
+      - MONGODB_URI=mongodb://mongo:27017/weace_notifications
+    depends_on:
+      - mongo
+    networks:
+      - weace-network
+    volumes:
+      - ./services/notification-service:/app
+
+  # Utility Service
+  utility-service:
+    build:
+      context: ./services/utility-service
+      dockerfile: Dockerfile
+    ports:
+      - "3008:3008"
+    env_file:
+      - ./services/utility-service/.env
+    environment:
+      - NODE_ENV=development
+      - PORT=3008
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USERNAME=utility_user
+      - DB_PASSWORD=Admin@123
+      - DB_NAME=weace_utility
+    depends_on:
+      - mysql
+    networks:
+      - weace-network
+    volumes:
+      - ./services/utility-service:/app
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: weace_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: Admin@123
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./scripts/mysql-init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - weace-network
+
+  # MongoDB Database
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - weace-network
+
+  # phpMyAdmin for MySQL Management
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=Admin@123
+      - MYSQL_ROOT_PASSWORD=Admin@123
+    depends_on:
+      - mysql
+    networks:
+      - weace-network
+
+  # Mongo Express for MongoDB Management
+  mongo-express:
+    image: mongo-express:latest
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=
+      - ME_CONFIG_BASICAUTH_USERNAME=admin
+      - ME_CONFIG_BASICAUTH_PASSWORD=admin123
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+    depends_on:
+      - mongo
+    networks:
+      - weace-network
+
+networks:
+  weace-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  mongo_data:

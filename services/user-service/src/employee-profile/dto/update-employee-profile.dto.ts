@@ -1,0 +1,257 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsBoolean, IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
+import { Types } from 'mongoose';
+
+export class UpdateEmployeeProfileDto{
+    @ApiProperty({
+        example: '507f1f77bcf86cd799439011',
+        description: 'The user ID',
+    })
+    @IsNotEmpty()
+    @IsString()
+    userId: Types.ObjectId;
+
+    @ApiProperty({
+        example: 'Tech Solutions Inc.',
+        description: 'Organization name',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    organizationName?: string;
+
+    @ApiProperty({
+        example: 'tech-solutions-inc',
+        description: 'Unique organization slug',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    orgSlug?: string;
+
+    @ApiProperty({
+        example: 'provider123',
+        description: 'Training provider ID',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    trainingProviderId?: string;
+
+    @ApiProperty({
+        example: 49,
+        description: 'Corporate currency code',
+        default: 49,
+    })
+    @IsOptional()
+    @IsNumber()
+    corporateCurrency?: number;
+
+    @ApiProperty({
+        example: 'Leading technology solutions provider',
+        description: 'Organization description',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    description?: string;
+
+    @ApiProperty({
+        example: 'Senior Manager',
+        description: 'Designation in the organization',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    designation?: string;
+
+    @ApiProperty({
+        example: '22AAAAA0000A1Z5',
+        description: 'GST number',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    gstNumber?: string;
+
+    @ApiProperty({
+        example: 'ABCDE1234F',
+        description: 'PAN number',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    panNumber?: string;
+
+    @ApiProperty({
+        example: 101,
+        description: 'Organization phone dial ID',
+        default: 101,
+        required: false,
+    })
+    @IsOptional()
+    @IsNumber()
+    orgPhoneDialId?: number;
+
+    @ApiProperty({
+        example: '9876543210',
+        description: 'Organization phone number',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    organizationPhone?: string;
+
+    @ApiProperty({
+        example: 5,
+        description: 'Number of recruiters',
+        default: 2,
+    })
+    @IsOptional()
+    @IsNumber()
+    numRecruiters?: number;
+
+    @ApiProperty({
+        example: 'https://example.com/logo.png',
+        description: 'Organization image URL',
+        required: false,
+    })
+    @IsOptional()
+    @IsUrl()
+    image?: string;
+
+    @ApiProperty({
+        example: '123 Main Street, Tech Park',
+        description: 'Organization address',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    address?: string;
+
+    @ApiProperty({
+        example: '400001',
+        description: 'ZIP code',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    zipCode?: string;
+
+    @ApiProperty({
+        example: 1,
+        description: 'Country ID',
+        required: false,
+    })
+    @IsOptional()
+    @IsNumber()
+    countryId?: number;
+
+    @ApiProperty({
+        example: 1,
+        description: 'State ID',
+        required: false,
+    })
+    @IsOptional()
+    @IsNumber()
+    stateId?: number;
+
+    @ApiProperty({
+        example: 1,
+        description: 'City ID',
+        required: false,
+    })
+    @IsOptional()
+    @IsNumber()
+    cityId?: number;
+
+    @ApiProperty({
+        example: 'contact@techsolutions.com',
+        description: 'Alternate email address',
+        required: false,
+    })
+    @IsOptional()
+    @IsEmail()
+    alternateEmail?: string;
+
+    @ApiProperty({
+        example: false,
+        description: 'Create page flag',
+        default: false,
+    })
+    @IsOptional()
+    @IsBoolean()
+    createPage?: boolean;
+
+    @ApiProperty({
+        example: false,
+        description: 'Page active status',
+        default: false,
+    })
+    @IsOptional()
+    @IsBoolean()
+    pageActiveStatus?: boolean;
+
+    @ApiProperty({
+        example: 'Innovative tech solutions',
+        description: 'Short description',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    shortDescription?: string;
+
+    @ApiProperty({
+        example: 'Software development, Cloud solutions, AI services',
+        description: 'Products and services',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    productsServices?: string;
+
+    @ApiProperty({
+        example: 'Innovation-driven culture with flexible policies',
+        description: 'Culture and policies',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    culturePolicies?: string;
+
+    @ApiProperty({
+        example: 'https://techsolutions.com',
+        description: 'Website URL',
+        required: false,
+    })
+    @IsOptional()
+    @IsUrl()
+    website?: string;
+
+    @ApiProperty({
+        example: 'https://youtube.com/watch?v=example',
+        description: 'Video link',
+        required: false,
+    })
+    @IsOptional()
+    @IsUrl()
+    videoLink?: string;
+
+    @ApiProperty({
+        example: '1234567890',
+        description: 'Created by',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    createdBy?: string;
+
+    @ApiProperty({
+        example: '1234567890',
+        description: 'Updated by',
+        required: false,
+    })
+    @IsOptional()
+    @IsString()
+    updatedBy?: string;
+} 

@@ -1,0 +1,1034 @@
+{
+  "info": {
+    "name": "WeAce Microservices API",
+    "description": "Complete API collection for WeAce microservices architecture - Updated with all working endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Health Checks",
+      "item": [
+        {
+          "name": "API Gateway Health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            }
+          }
+        },
+        {
+          "name": "Auth Service Health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "health"]
+            }
+          }
+        },
+        {
+          "name": "User Service Health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "health"]
+            }
+          }
+        },
+        {
+          "name": "Coaching Service Health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/coaching/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["coaching", "health"]
+            }
+          }
+        },
+        {
+          "name": "Training Service Health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/training/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["training", "health"]
+            }
+          }
+        },
+        {
+          "name": "Event Service Health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/events/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["events", "health"]
+            }
+          }
+        },
+        {
+          "name": "Engagement Service Health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/engagement/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["engagement", "health"]
+            }
+          }
+        },
+        {
+          "name": "Notification Service Health",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/notifications/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", "health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"Password123!\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"role\": \"user\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('accessToken', response.accessToken);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('accessToken', response.accessToken);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Verify Token",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth/verify-token",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "verify-token"]
+            }
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/forgot-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "forgot-password"]
+            }
+          }
+        },
+        {
+          "name": "Confirm Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"code\": \"123456\",\n  \"newPassword\": \"NewPassword123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/confirm-forgot-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "confirm-forgot-password"]
+            }
+          }
+        },
+        {
+          "name": "Get SSO Login URL",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth/login-url",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login-url"]
+            }
+          }
+        },
+        {
+          "name": "Get SSO Logout URL",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout-url",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout-url"]
+            }
+          }
+        },
+        {
+          "name": "SSO Callback",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth/sso/callback?code=123456&state=abc123",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "sso", "callback"],
+              "query": [
+                {
+                  "key": "code",
+                  "value": "123456"
+                },
+                {
+                  "key": "state",
+                  "value": "abc123"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Refresh SSO Tokens",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"your-refresh-token-here\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/sso/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "sso", "refresh"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Current User Profile",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Get User Profile by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/profile/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile", "123"]
+            }
+          }
+        },
+        {
+          "name": "Update Current User Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"phone\": \"+1234567890\",\n  \"bio\": \"Software Developer\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Create User (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"jane@example.com\",\n  \"role\": \"coach\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/users/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "123"]
+            }
+          }
+        },
+        {
+          "name": "Update User by ID (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Jane\",\n  \"lastName\": \"Smith\",\n  \"email\": \"jane.smith@example.com\",\n  \"role\": \"coach\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "123"]
+            }
+          }
+        },
+        {
+          "name": "Delete User (Admin)",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/users/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "123"]
+            }
+          }
+        },
+        {
+          "name": "Search Users",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"john\",\n  \"filters\": {\n    \"role\": \"user\",\n    \"status\": \"active\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/search",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "search"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Coaching",
+      "item": [
+        {
+          "name": "Get All Sessions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/coaching/sessions?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["coaching", "sessions"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Session by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/coaching/sessions/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["coaching", "sessions", "123"]
+            }
+          }
+        },
+        {
+          "name": "Create Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"coachId\": \"456\",\n  \"menteeId\": \"789\",\n  \"title\": \"Career Development Session\",\n  \"description\": \"Discussing career goals and development plan\",\n  \"scheduledAt\": \"2024-01-15T10:00:00Z\",\n  \"duration\": 60,\n  \"type\": \"career\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/coaching/sessions",
+              "host": ["{{baseUrl}}"],
+              "path": ["coaching", "sessions"]
+            }
+          }
+        },
+        {
+          "name": "Update Session",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Career Development Session\",\n  \"description\": \"Updated description\",\n  \"scheduledAt\": \"2024-01-16T10:00:00Z\",\n  \"duration\": 90,\n  \"status\": \"confirmed\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/coaching/sessions/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["coaching", "sessions", "123"]
+            }
+          }
+        },
+        {
+          "name": "Delete Session",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/coaching/sessions/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["coaching", "sessions", "123"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Training",
+      "item": [
+        {
+          "name": "Get All Courses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/training/courses?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["training", "courses"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Course by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/training/courses/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["training", "courses", "123"]
+            }
+          }
+        },
+        {
+          "name": "Create Course",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Advanced JavaScript\",\n  \"description\": \"Learn advanced JavaScript concepts\",\n  \"category\": \"programming\",\n  \"level\": \"intermediate\",\n  \"duration\": 120,\n  \"price\": 99.99,\n  \"instructor\": \"John Doe\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/training/courses",
+              "host": ["{{baseUrl}}"],
+              "path": ["training", "courses"]
+            }
+          }
+        },
+        {
+          "name": "Update Course",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Advanced JavaScript\",\n  \"description\": \"Updated description\",\n  \"duration\": 150,\n  \"price\": 129.99\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/training/courses/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["training", "courses", "123"]
+            }
+          }
+        },
+        {
+          "name": "Delete Course",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/training/courses/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["training", "courses", "123"]
+            }
+          }
+        },
+        {
+          "name": "Get All Assessments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/training/assessments?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["training", "assessments"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Assessment by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/training/assessments/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["training", "assessments", "123"]
+            }
+          }
+        },
+        {
+          "name": "Create Assessment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courseId\": \"456\",\n  \"title\": \"JavaScript Fundamentals Quiz\",\n  \"description\": \"Test your JavaScript knowledge\",\n  \"questions\": [\n    {\n      \"question\": \"What is JavaScript?\",\n      \"type\": \"multiple-choice\",\n      \"options\": [\"Programming Language\", \"Markup Language\", \"Styling Language\"],\n      \"correctAnswer\": 0\n    }\n  ],\n  \"timeLimit\": 30\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/training/assessments",
+              "host": ["{{baseUrl}}"],
+              "path": ["training", "assessments"]
+            }
+          }
+        },
+        {
+          "name": "Submit Assessment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"assessmentId\": \"123\",\n  \"answers\": [\n    {\n      \"questionId\": \"1\",\n      \"answer\": 0\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/training/assessments/123/submit",
+              "host": ["{{baseUrl}}"],
+              "path": ["training", "assessments", "123", "submit"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Get All Events",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/events?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["events"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Event by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/events/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["events", "123"]
+            }
+          }
+        },
+        {
+          "name": "Create Event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Tech Conference 2024\",\n  \"description\": \"Annual technology conference\",\n  \"startDate\": \"2024-06-15T09:00:00Z\",\n  \"endDate\": \"2024-06-17T18:00:00Z\",\n  \"location\": \"San Francisco, CA\",\n  \"type\": \"conference\",\n  \"capacity\": 500,\n  \"organizer\": \"Tech Events Inc.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["events"]
+            }
+          }
+        },
+        {
+          "name": "Update Event",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Tech Conference 2024\",\n  \"description\": \"Updated description\",\n  \"location\": \"Los Angeles, CA\",\n  \"capacity\": 750\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/events/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["events", "123"]
+            }
+          }
+        },
+        {
+          "name": "Delete Event",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/events/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["events", "123"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Engagement",
+      "item": [
+        {
+          "name": "Get All Engagements",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/engagement?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["engagement"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Engagement by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/engagement/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["engagement", "123"]
+            }
+          }
+        },
+        {
+          "name": "Create Engagement",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"456\",\n  \"type\": \"course_completion\",\n  \"action\": \"completed\",\n  \"metadata\": {\n    \"courseId\": \"789\",\n    \"score\": 95,\n    \"timeSpent\": 120\n  },\n  \"timestamp\": \"2024-01-15T10:30:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/engagement",
+              "host": ["{{baseUrl}}"],
+              "path": ["engagement"]
+            }
+          }
+        },
+        {
+          "name": "Update Engagement",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"course_completion\",\n  \"action\": \"updated\",\n  \"metadata\": {\n    \"courseId\": \"789\",\n    \"score\": 98,\n    \"timeSpent\": 125\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/engagement/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["engagement", "123"]
+            }
+          }
+        },
+        {
+          "name": "Delete Engagement",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/engagement/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["engagement", "123"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Get All Notifications",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/notifications?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Notification by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/notifications/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", "123"]
+            }
+          }
+        },
+        {
+          "name": "Create Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"456\",\n  \"type\": \"email\",\n  \"title\": \"Welcome to WeAce!\",\n  \"message\": \"Thank you for joining our platform.\",\n  \"priority\": \"normal\",\n  \"scheduledAt\": \"2024-01-15T10:00:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/notifications",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications"]
+            }
+          }
+        },
+        {
+          "name": "Update Notification",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Welcome Message\",\n  \"message\": \"Updated welcome message\",\n  \"priority\": \"high\",\n  \"status\": \"sent\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/notifications/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", "123"]
+            }
+          }
+        },
+        {
+          "name": "Delete Notification",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/notifications/123",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", "123"]
+            }
+          }
+        },
+        {
+          "name": "Send Email Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"user@example.com\",\n  \"subject\": \"Welcome to WeAce\",\n  \"body\": \"Thank you for joining our platform!\",\n  \"template\": \"welcome\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/notifications/send-email",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", "send-email"]
+            }
+          }
+        },
+        {
+          "name": "Send SMS Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"to\": \"+1234567890\",\n  \"message\": \"Welcome to WeAce! Your account has been created.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/notifications/send-sms",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", "send-sms"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

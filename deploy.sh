@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd /docker
+cd /var/www
 
 
 

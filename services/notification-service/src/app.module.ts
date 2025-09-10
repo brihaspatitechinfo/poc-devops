@@ -11,7 +11,7 @@ import { HealthModule } from './health/health.module';
       envFilePath: ['.env.local', '.env'],
     }),
     MongooseModule.forRoot(
-      process.env.MONGODB_URI || 'mongodb://mongo:27017/weace_notifications',
+      process.env.MONGODB_URI || 'mongodb://myappuser:admin@123@54.221.52.72:27017/myappdb',
     ),
     NotificationsModule,
     HealthModule,

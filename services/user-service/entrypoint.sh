@@ -7,6 +7,8 @@ set -e
 if [ "$(id -u)" = "0" ]; then
   mkdir -p /app/logs
   chown -R 1001:1001 /app/logs 2>/dev/null || true
+  chmod 755 -R /app/logs
+  chown -R nestjs:nodejs /app/logs
   # if dist is root-owned when a volume overlaid files, optionally chown entire app
   # chown -R 1001:1001 /app || true  # uncomment only if safe
   # finally drop privileges and exec the original CMD as nestjs

@@ -17,7 +17,7 @@ import { CreateCohortCorporateSettingsModule } from './Create-cohort-corporate-s
       host: process.env.DB_HOST || 'mysql',
       port: parseInt(process.env.DB_PORT) || 3306,
       username: process.env.DB_USERNAME || 'admin',
-      password: process.env.DB_PASSWORD || 'admin@123',
+      password: process.env.DB_PASSWORD || 'Admin@123',
       database: process.env.DB_NAME || 'test',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: process.env.NODE_ENV !== 'production',

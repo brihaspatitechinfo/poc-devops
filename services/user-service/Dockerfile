@@ -15,10 +15,6 @@ COPY --from=builder --chown=nestjs:nodejs /app/dist ./dist
 COPY --from=builder --chown=nestjs:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=nestjs:nodejs /app/package*.json ./
 
-RUN mkdir -p /app/logs \
-  && chown -R nestjs:nodejs /app/logs \
-  && chmod 755 /app/logs
-
 USER nestjs
 EXPOSE 3002
 

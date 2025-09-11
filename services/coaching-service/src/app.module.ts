@@ -14,7 +14,7 @@ import { CreateCohortCorporateSettingsModule } from './Create-cohort-corporate-s
     }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: process.env.DB_HOST || 'mysql',
+      host: process.env.DB_HOST || '54.221.52.72',
       port: parseInt(process.env.DB_PORT) || 3306,
       username: process.env.DB_USERNAME || 'admin',
       password: process.env.DB_PASSWORD || 'Admin@123',

@@ -17,7 +17,7 @@ import { UsersModule } from './users/users.module';
       isGlobal: true,
       envFilePath: ['.env.local', '.env'],
     }),
-    MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://54.221.52.72:27017/myappuser',
+    MongooseModule.forRoot(process.env.MONGODB_URI || 'mongodb://54.221.52.72:27017/myappuser'),
     UsersModule,
     HealthModule,
     CryptoModule,

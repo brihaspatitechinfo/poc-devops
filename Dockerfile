@@ -4,8 +4,8 @@ COPY . .
 RUN addgroup -g 1001 -S nodejs \
   && adduser -S nestjs -u 1001 -G nodejs \
   && mkdir -p /app/logs \
-  && chown -R nestjs:nodejs /app /app/logs \
-  && chmod -R 777  /app /app/logs
+  && chown -R nestjs:nodejs /app \
+  && chmod -R 755 /app
 USER nestjs
 CMD ["node", "main.js"]
 
